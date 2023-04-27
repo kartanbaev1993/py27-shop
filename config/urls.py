@@ -1,6 +1,5 @@
 """
 URL configuration for config project.
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
 Examples:
@@ -21,7 +20,7 @@ from drf_yasg.views import get_schema_view
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Python 23 API",
+        title="Python 27 API",
         description="makers bootcamp",
         default_version="v1",
     ),
@@ -32,5 +31,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('docs/', schema_view.with_ui("swagger")),
-    path('account/', include('account.urls')),
+    path('api/v1/account/', include("account.urls")),
+    path('api/v1/', include("main.urls")),
+    path('api/v1/', include("review.urls")),
 ]
