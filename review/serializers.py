@@ -2,6 +2,7 @@ from rest_framework.serializers import ModelSerializer
 from .models import Comment, Rating, Favorite
 
 
+
 class CommentSerializers(ModelSerializer):
     class Meta:
         model = Comment
@@ -11,6 +12,11 @@ class CommentSerializers(ModelSerializer):
         super().validate(attrs)
         attrs["user"] = self.context["request"].user
         return attrs
+
+    def to_representation(self, instance: Comment):
+        rep = super().to_representation(instance)
+        rep["user"] = {"id": instance.user.id, "email": instance.user.email}
+        return rep
 
 
 class RatingSerializers(ModelSerializer):
@@ -36,3 +42,10 @@ class FavoriteSerializers(ModelSerializer):
         super().validate(attrs)
         attrs["user"] = self.context["request"].user
         return attrs
+
+    def to_representation(self, instance: Favorite):
+        from main.serializers import ProductSerializer
+        rep = super().to_representation(instance)
+        rep["product"] = ProductSerializer(instance.product).data
+        return rep
+
