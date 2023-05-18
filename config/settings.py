@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'main',
     'review',
     'order',
+    'django_celery_beat',
 
 ]
 
